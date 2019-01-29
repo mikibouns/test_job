@@ -9,7 +9,7 @@ class AdditionalServices(models.Model):
 
 
 class HotelCard(models.Model):
-    hc_name = models.CharField(verbose_name='name', max_length=32, blank=True, unique=True, primary_key=True)
+    hc_name = models.CharField(verbose_name='name', max_length=32, blank=True, unique=True)
     hc_description = models.TextField(verbose_name='description', blank=True, null=True)
     hc_title_img = models.ImageField(verbose_name='title_img', blank=True, upload_to='media')
 

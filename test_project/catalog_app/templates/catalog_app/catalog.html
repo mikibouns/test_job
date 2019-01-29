@@ -1,5 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}catalog{% endblock %}
 {% block container %}
-        <h1>Catalog</h1>
+<div class="row">
+    {% if hotels %}
+        {% for hotel in hotels %}
+            <div class="col-sm-3 blog-main">
+                <div class="sidebar-module sidebar-module-inset">
+                    <br/>
+                    <a href="/catalog/{{ hotel.pk }}" >
+                        <img src="\media\{{ hotel.hc_title_img }}" class="img-responsive">
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-8 col-sm-offset-1 blog-sidebar">
+                <div class="sidebar-module sidebar-module-inset">
+                    <a href="/catalog/{{ hotel.pk }}" ><h2>{{ hotel.hc_name }}</h2></a>
+                    <p>{{ hotel.hc_description }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
 {% endblock %}
