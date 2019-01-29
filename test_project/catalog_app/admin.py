@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import HotelCard, AdditionalServices, Category, HotelRoom
 
-# Register your models here.
+admin.site.register(Category)
+admin.site.register(HotelCard)
+admin.site.register(AdditionalServices)
+admin.site.register(HotelRoom)

@@ -1,7 +1,13 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render
 
 
-def basic_page(request):
-    template = "base.html"
+def catalog_page(request):
+    template = "catalog_app/catalog.html"
+    context = {}
+    return render(request, template, context)
+
+
+def hotel_card_page(request):
+    template = "catalog_app/hotel_card.html"
     context = {}
     return render(request, template, context)

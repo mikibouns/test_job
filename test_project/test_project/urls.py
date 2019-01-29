@@ -15,8 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^catalog/', include('catalog_app.urls')),
+    url(r'^', include('main_app.urls', namespace='main')),
+    url(r'^catalog/', include('catalog_app.urls', namespace='catalog')),
+    # url(r'^auth/', include('auth_app.urls', namespace='auth')),
+    url(r'^salesrate/', include('salesrate_app.urls', namespace='sales_rate')),
+
     url(r'^admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
