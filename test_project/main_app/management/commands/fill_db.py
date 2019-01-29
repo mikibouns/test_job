@@ -68,7 +68,60 @@ HC = [
      'hc_title_img': r'\hotels\10.jpg'}
 ]
 
-HR = []
+HR = [
+    {'hr_category': 'Suite',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\2_1.jpg',
+     'hr_hotel': 'Baros Maldives'},
+    {'hr_category': 'Suite',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\2_2.jpg',
+     'hr_hotel': 'Baros Maldives'},
+    {
+     'hr_category': 'Family Room',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\3_1.jpg',
+     'hr_hotel': 'Armani Hotel Dubai'},
+    {
+     'hr_category': 'Suite',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\3_2.jpg',
+     'hr_hotel': 'Armani Hotel Dubai'},
+    {
+     'hr_category': 'Suite',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\3_3.jpg',
+     'hr_hotel': 'Armani Hotel Dubai'},
+    {
+     'hr_category': 'Family Room',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\3_4.jpg',
+     'hr_hotel': 'Armani Hotel Dubai'},
+    {
+     'hr_category': 'Suite',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\4_1.jpg',
+     'hr_hotel': 'Dukes London'},
+    {
+     'hr_category': 'Village',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\4_2.jpg',
+     'hr_hotel': 'Dukes London'},
+    {
+     'hr_category': 'Village',
+     'hr_description': 'description',
+     'hr_price': 12000,
+     'hr_title_img': r'\rooms\4_3.jpg',
+     'hr_hotel': 'Dukes London'},
+]
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -85,6 +138,17 @@ class Command(BaseCommand):
         HotelCard.objects.all().delete()
         for hotel_card in HC:
             new_category = HotelCard(**hotel_card)
+            new_category.save()
+
+        HotelRoom.objects.all().delete()
+        for hr in HR:
+            hr_hotel = hr['hr_hotel']
+            hr_category = hr['hr_category']
+            hr_category = Category.objects.get(category_name=hr_category)
+            hr_hotel = HotelCard.objects.get(hc_name=hr_hotel)
+            hr['hr_hotel'] = hr_hotel
+            hr['hr_category'] = hr_category
+            new_category = HotelRoom(**hr)
             new_category.save()
 
         # data_img = loadFromJSON('collectionsimg')
