@@ -4,9 +4,12 @@ from django.contrib.auth.models import User
 from subprocess import call
 import os
 
+try:
+    os.remove('db.sqlite3')
+    os.remove(r'D:\IGOR\PYTHON\test_job\test_project\catalog_app\migrations\0001_initial.py')
+except:
+    print('OK!')
 
-os.remove('db.sqlite3')
-os.remove(r'D:\IGOR\PYTHON\test_job\test_project\catalog_app\migrations\0001_initial.py')
 
 call('manage.py makemigrations', shell=True)
 call('manage.py migrate', shell=True)

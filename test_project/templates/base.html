@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 {% load bootstrap3 %}
+<script src="{% bootstrap_jquery_url %}"></script>
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
   </head>
 
   <body>
@@ -24,9 +25,9 @@
         </div>
         <div class="navbar-collapse collapse">
           {% if user.is_authenticated %}
-          <form class="navbar-form navbar-right" role="form" action="#" method="post">
+          <form class="navbar-form navbar-right" role="form" action="{% url 'auth:logout' %}" method="post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-success">Sign out</button>
+            <button type="submit" class="btn btn-success">Log out</button>
           </form>
           {% else %}
           <!-- Authentication Form -->
@@ -38,7 +39,7 @@
             <div class="form-group">
               <input type="password" placeholder="Password" class="form-control" name="password">
             </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button type="submit" class="btn btn-success">Log in</button>
           </form>
           {% endif %}
         </div>

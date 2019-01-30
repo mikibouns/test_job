@@ -29,6 +29,15 @@
         <h3>{{ room.hr_category }}</h3>
         <p>price: {{ room.hr_price }}  <span class="glyphicon glyphicon-euro"><span/></p>
         <p></p>
+        <div class="form-group">
+          <h4>Additional Services</h4>
+          <label for="sel1">meal plan:</label>
+          <select class="form-control" id="sel1">
+            {% for f in food %}
+            <option>{{ f.as_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
         <p><a href="#" class="btn btn-primary" role="button">Забронировать</a>
       </div>
     </div>

@@ -18,7 +18,7 @@ def login(request):
     context = {}
     return render(request, 'base.html', context)
 
-# def logout(request):
-#     auth.logout(request)
-#     return HttpResponseRedirect(reverse('main'))
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
 
