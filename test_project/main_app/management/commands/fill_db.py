@@ -3,14 +3,10 @@ from catalog_app.models import AdditionalServices, Category, HotelRoom, HotelCar
 from django.contrib.auth.models import User
 from subprocess import call
 import os
-from pprint import pprint
-#from test_project.auth_app.models import AuthUsers
 
 
 os.remove('db.sqlite3')
 os.remove(r'D:\IGOR\PYTHON\test_job\test_project\catalog_app\migrations\0001_initial.py')
-
-
 
 call('manage.py makemigrations', shell=True)
 call('manage.py migrate', shell=True)
@@ -69,12 +65,27 @@ HC = [
 ]
 
 HR = [
+    {'hr_category': 'Family Room',
+     'hr_description': 'description',
+     'hr_price': 16200,
+     'hr_title_img': r'\rooms\1_1.jpg',
+     'hr_hotel': 'The Oberoi Udaivilas'},
+    {'hr_category': 'Suite',
+     'hr_description': 'description',
+     'hr_price': 12200,
+     'hr_title_img': r'\rooms\1_2.jpg',
+     'hr_hotel': 'The Oberoi Udaivilas'},
+    {'hr_category': 'Village',
+     'hr_description': 'description',
+     'hr_price': 122200,
+     'hr_title_img': r'\rooms\1_3.jpg',
+     'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Suite',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\2_1.jpg',
      'hr_hotel': 'Baros Maldives'},
-    {'hr_category': 'Suite',
+    {'hr_category': 'Village',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\2_2.jpg',
@@ -151,15 +162,5 @@ class Command(BaseCommand):
             new_category = HotelRoom(**hr)
             new_category.save()
 
-        # data_img = loadFromJSON('collectionsimg')
-        # CollectionsImg.objects.all().delete()
-        # for img in data_img:
-        #     collection_name = img["img_collection"]
-        #     # Получаем коллекцию по имени
-        #     _collection_name = Collections.objects.get(collection_name=collection_name)
-        #     # Заменяем название коллекции объектом
-        #     img['img_collection'] = _collection_name
-        #     new_collectionsimg = CollectionsImg(**img)
-        #     new_collectionsimg.save()
         # Создаем суперпользователя при помощи менеджера модели
         super_user = User.objects.create_superuser('admin', 'admin@mail.com', '123')

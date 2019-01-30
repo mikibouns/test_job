@@ -1,5 +1,39 @@
 {% extends 'base.html' %}
 {% block title %}hotel_card{% endblock %}
 {% block container %}
-        <h1>Hotel card</h1>
+{% if hotel %}
+<div class="row">
+  <div class="col-sm-5 col-md-5 blog-main">
+    <div class="sidebar-module sidebar-module-inset">
+      <br/>
+      <img src="\media\{{ hotel.hc_title_img }}" class="img-responsive">
+    </div>
+  </div>
+  <div class="col-sm-5 col-md-6 col-sm-offset-1 blog-sidebar">
+    <div class="sidebar-module sidebar-module-inset">
+      <h2>{{ hotel.hc_name }}</h2>
+      <p>{{ hotel.hc_description }}</p>
+    </div>
+  </div>
+</div>
+
+<ul class="nav nav-tabs"></ul>
+<br/>
+
+<div class="row">
+{% for room in rooms %}
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img src="\media\{{ room.hr_title_img}}" alt="...">
+      <div class="caption">
+        <h3>{{ room.hr_category }}</h3>
+        <p>price: {{ room.hr_price }}  <span class="glyphicon glyphicon-euro"><span/></p>
+        <p></p>
+        <p><a href="#" class="btn btn-primary" role="button">Забронировать</a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endif %}
 {% endblock %}
