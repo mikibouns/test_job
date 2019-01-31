@@ -28,6 +28,10 @@ class HotelRoom(models.Model):
     def __str__(self):
         return str(self.id)
 
+    def get_date_range(self):
+        date_range = HotelDateRange.objects.filter(room=self.id)
+        return date_range
+
 
 class HotelDateRange(models.Model):
     room = models.ForeignKey(HotelRoom)

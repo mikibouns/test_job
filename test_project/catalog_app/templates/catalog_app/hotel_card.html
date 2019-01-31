@@ -84,14 +84,20 @@
         <th>Категория</th>
         <th>Цена</th>
         <th>Количество мест</th>
+        <th>Свободные даты</th>
       </tr>
     </thead>
     <tbody>
     {% for room in filter.qs %}
       <tr>
         <td>{{ room.hr_category }}</td>
-        <td>{{ room.hr_price }}</td>
+        <td>{{ room.hr_price }} <span class="glyphicon glyphicon-euro"></span></td>
         <td>{{ room.hr_places}}</td>
+        <td>
+          {% for date_range in room.get_date_range %}
+          {{ date_range }}
+          {% endfor %}
+        </td>
       </tr>
     {% endfor %}
     </tbody>
