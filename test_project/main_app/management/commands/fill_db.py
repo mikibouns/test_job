@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from catalog_app.models import AdditionalServices, Category, HotelRoom, HotelCard
+from catalog_app.models import Category, HotelRoom, HotelCard
 from django.contrib.auth.models import User
 from subprocess import call
 import os
@@ -8,7 +8,7 @@ try:
     os.remove('db.sqlite3')
     os.remove(r'D:\IGOR\PYTHON\test_job\test_project\catalog_app\migrations\0001_initial.py')
 except:
-    print('OK!')
+    print('Not found!')
 
 
 call('manage.py makemigrations', shell=True)
@@ -26,12 +26,6 @@ CATEGORY = [
     {'category_name': 'Village'},
     {'category_name': 'Apartament'},
     {'category_name': 'Honeymoon Room'}
-]
-
-AS = [
-    {'as_name': 'RO'},
-    {'as_name': 'BB'},
-    {'as_name': 'ALL'}
 ]
 
 HC = [
@@ -69,67 +63,73 @@ HC = [
 
 HR = [
     {'hr_category': 'Family Room',
+     'hr_places': 2,
      'hr_description': 'description',
      'hr_price': 16200,
      'hr_title_img': r'\rooms\1_1.jpg',
      'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Suite',
+     'hr_places': 1,
      'hr_description': 'description',
      'hr_price': 12200,
      'hr_title_img': r'\rooms\1_2.jpg',
      'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Village',
+     'hr_places': 5,
      'hr_description': 'description',
      'hr_price': 122200,
      'hr_title_img': r'\rooms\1_3.jpg',
      'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Suite',
+     'hr_places': 2,
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\2_1.jpg',
      'hr_hotel': 'Baros Maldives'},
     {'hr_category': 'Village',
+     'hr_places': 3,
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\2_2.jpg',
      'hr_hotel': 'Baros Maldives'},
     {
      'hr_category': 'Family Room',
+     'hr_places': 2,
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\3_1.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {
+    {'hr_places': 2,
      'hr_category': 'Suite',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\3_2.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {
+    {'hr_places': 2,
      'hr_category': 'Suite',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\3_3.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {
+    {'hr_places': 2,
      'hr_category': 'Family Room',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\3_4.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {
+    {'hr_places': 1,
      'hr_category': 'Suite',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\4_1.jpg',
      'hr_hotel': 'Dukes London'},
-    {
+    {'hr_places': 5,
      'hr_category': 'Village',
      'hr_description': 'description',
      'hr_price': 12000,
      'hr_title_img': r'\rooms\4_2.jpg',
      'hr_hotel': 'Dukes London'},
-    {
+    {'hr_places': 3,
      'hr_category': 'Village',
      'hr_description': 'description',
      'hr_price': 12000,
@@ -142,11 +142,6 @@ class Command(BaseCommand):
         Category.objects.all().delete()
         for category in CATEGORY:
             new_category = Category(**category)
-            new_category.save()
-
-        AdditionalServices.objects.all().delete()
-        for add_srv in AS:
-            new_category = AdditionalServices(**add_srv)
             new_category.save()
 
         HotelCard.objects.all().delete()

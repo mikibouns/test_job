@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 {% block title %}hotel_card{% endblock %}
 {% block container %}
 {% if hotel %}
@@ -19,30 +20,81 @@
 
 <ul class="nav nav-tabs"></ul>
 <br/>
-
-<div class="row">
+<!-- gallary -->
+<div class="row padded">
 {% for room in rooms %}
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
       <img src="\media\{{ room.hr_title_img}}" alt="...">
       <div class="caption">
-        <h3>{{ room.hr_category }}</h3>
-        <p>price: {{ room.hr_price }}  <span class="glyphicon glyphicon-euro"><span/></p>
-        <p></p>
-        <div class="form-group">
-          <h4>Additional Services</h4>
-          <label for="sel1">meal plan:</label>
-          <select class="form-control" id="sel1">
-            {% for f in food %}
-            <option>{{ f.as_name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <p><a href="#" class="btn btn-primary" role="button">Забронировать</a>
       </div>
     </div>
   </div>
 {% endfor %}
 </div>
 {% endif %}
+
+
+<div class="row">
+<form data-toggle="validator" role="form">
+  <div class="form-group col-md-4">
+    <label>Количество мест в номере:</label>
+    {% render_field filter.form.hr_places type="number" min="1" max="5" class="form-control" %}
+  </div>
+  <div class="form-group col-md-4">
+    <button type="submit" class="btn btn-success">Найти</button>
+  </div>
+</form>
+</div>
+
+
+<!--<div class="row">-->
+  <!--<form data-toggle="validator" role="form" action="{% url 'catalog:hotel_page' hotel.pk %}" method="post">-->
+    <!--{% csrf_token %}-->
+    <!--<div class="form-group col-md-4">-->
+      <!--<label for="inputDate">Дата заезда:</label>-->
+      <!--<input type="date" class="form-control" name="check-in" required>-->
+    <!--</div>-->
+    <!--<div class="form-group col-md-4">-->
+      <!--<label for="inputDate">Дата отъезда:</label>-->
+      <!--<input type="date" class="form-control" name="check-out" required>-->
+    <!--</div>-->
+    <!--<div class="form-group col-md-4">-->
+      <!--<label for="sel1">Количество мест в номере:</label>-->
+      <!--<select class="form-control" name="places">-->
+        <!--<option>1</option>-->
+        <!--<option>2</option>-->
+        <!--<option>3</option>-->
+        <!--<option>4</option>-->
+      <!--</select>-->
+    <!--</div>-->
+    <!--<div class="form-group col-md-4">-->
+      <!--<button type="submit" class="btn btn-success">Найти</button>-->
+    <!--</div>-->
+  <!--</form>-->
+<!--</div>-->
+
+<div class="table">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Номера</div>
+  <!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Категория</th>
+        <th>Цена</th>
+        <th>Количество мест</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for room in filter.qs %}
+      <tr>
+        <td>{{ room.hr_category }}</td>
+        <td>{{ room.hr_price }}</td>
+        <td>{{ room.hr_places}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

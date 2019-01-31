@@ -9,7 +9,7 @@
             <div class="col-sm-5 col-md-5 blog-main">
                 <div class="sidebar-module sidebar-module-inset">
                     <br/>
-                    <a href="/catalog/{{ hotel.pk }}" >
+                    <a href="{% url 'catalog:hotel_page' hotel.pk %}" >
                         <img src="\media\{{ hotel.hc_title_img }}" class="img-responsive">
                     </a>
                 </div>

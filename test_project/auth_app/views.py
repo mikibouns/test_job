@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect
 from . forms import UserLoginForm
 from django.contrib import auth
-from django.urls import reverse
 
 
 def login(request):
+    current_path = request.META.get('HTTP_REFERER')
     login_form = UserLoginForm(data=request.POST)
     if request.method == 'POST' and login_form.is_valid():
         username = request.POST['username']
@@ -13,12 +13,12 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(current_path)
 
-    context = {}
-    return render(request, 'base.html', context)
+    return HttpResponseRedirect(current_path)
+
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

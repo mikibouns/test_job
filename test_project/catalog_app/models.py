@@ -1,13 +1,6 @@
 from django.db import models
 
 
-class AdditionalServices(models.Model):
-    as_name = models.CharField(verbose_name='name', max_length=32, blank=True, unique=True)
-
-    def __str__(self):
-        return str(self.as_name)
-
-
 class HotelCard(models.Model):
     hc_name = models.CharField(verbose_name='name', max_length=32, blank=True, unique=True)
     hc_description = models.TextField(verbose_name='description', blank=True, null=True)
@@ -25,6 +18,7 @@ class Category(models.Model):
 
 
 class HotelRoom(models.Model):
+    hr_places = models.DecimalField(verbose_name='places', max_digits=10, decimal_places=0)
     hr_category = models.ForeignKey(Category)
     hr_description = models.TextField(verbose_name='description', blank=True, null=True)
     hr_price = models.DecimalField(verbose_name='price', max_digits=10, decimal_places=2)
@@ -33,6 +27,18 @@ class HotelRoom(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class HotelDateRange(models.Model):
+    room = models.ForeignKey(HotelRoom)
+    checkin = models.DateField(verbose_name='check-in')
+    checkout = models.DateField(verbose_name='check-out')
+
+    def __str__(self):
+        return '{} > {}'.format(self.checkin, self.checkout)
+
+
+
 
 
 

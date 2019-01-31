@@ -23,7 +23,6 @@ urlpatterns = [
     url(r'^catalog/', include('catalog_app.urls', namespace='catalog')),
     url(r'^auth/', include('auth_app.urls', namespace='auth')),
     url(r'^salesrate/', include('salesrate_app.urls', namespace='sales_rate')),
-
     url(r'^admin/', admin.site.urls),
 ]
 
