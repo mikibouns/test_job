@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class HotelCard(models.Model):
@@ -40,6 +41,7 @@ class HotelRoom(models.Model):
 
 
 class ReservedDates(models.Model):
+    user = models.ForeignKey(User)
     room = models.ForeignKey(HotelRoom)
     check_in = models.DateField(verbose_name='check-in')
     check_out = models.DateField(verbose_name='check-out')

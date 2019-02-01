@@ -64,7 +64,7 @@
         <th>Цена</th>
         <th>Количество мест</th>
         <th>Забронированные даты</th>
-        <th></th>
+        <th>Дополнительные сервисы</th>
         <th></th>
       </tr>
     </thead>
@@ -81,8 +81,10 @@
           {% endfor %}
         </td>
         <td>
-          <select>
+          <select name="additional_services">
             <option>RO</option>
+            <option>BB</option>
+            <option>ALL</option>
           </select>
         </td>
         <td><button type="submit" class="btn btn-success">Забронировать</button></td>

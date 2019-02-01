@@ -14,10 +14,8 @@ try:
 except:
     print('Not found!')
 
-
 call('manage.py makemigrations', shell=True)
 call('manage.py migrate', shell=True)
-
 
 CATEGORY = [
     {'category_name': 'Junior Suite'},
@@ -126,6 +124,16 @@ HR = [
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+
+        User.objects.all().delete()
+        for user in range(1,5):
+            new_user = User.objects.create_user(
+                username='user{}'.format(user),
+                email='user{}@mail.com',
+                password=123,
+            )
+            new_user.save()
+
         Category.objects.all().delete()
         for category in CATEGORY:
             new_category = Category(**category)
@@ -159,3 +167,8 @@ class Command(BaseCommand):
 
         # Создаем суперпользователя при помощи менеджера модели
         super_user = User.objects.create_superuser('admin', 'admin@mail.com', '123')
+
+        users = User.objects.all()
+        for user in users:
+            user.addedBy = super_user
+            user.save()
