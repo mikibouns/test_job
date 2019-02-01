@@ -65,11 +65,12 @@
         <th>Количество мест</th>
         <th>Забронированные даты</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
     {% for room in room_filter %}
-    <forma>
+    <forma role="form" metod="post" action="{% url 'catalog:hotel_page' hotel.pk %}">
       <tr>
         <td>{{ room.hr_category }}</td>
         <td>{{ room.hr_price }} <span class="glyphicon glyphicon-euro"></span></td>
@@ -78,6 +79,11 @@
           {% for rd in room.get_reserved_dates %}
           <h5>{{ rd }}</h5>
           {% endfor %}
+        </td>
+        <td>
+          <select>
+            <option>RO</option>
+          </select>
         </td>
         <td><button type="submit" class="btn btn-success">Забронировать</button></td>
       </tr>
