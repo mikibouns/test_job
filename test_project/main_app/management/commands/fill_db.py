@@ -1,8 +1,12 @@
 from django.core.management.base import BaseCommand
-from catalog_app.models import Category, HotelRoom, HotelCard
+from catalog_app.models import Category, HotelRoom, HotelCard, ReservedDates
 from django.contrib.auth.models import User
 from subprocess import call
 import os
+from random import randint
+import datetime
+
+
 
 try:
     os.remove('db.sqlite3')
@@ -63,79 +67,62 @@ HC = [
 
 HR = [
     {'hr_category': 'Family Room',
-     'hr_places': 2,
      'hr_description': 'description',
-     'hr_price': 16200,
      'hr_title_img': r'\rooms\1_1.jpg',
      'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Suite',
-     'hr_places': 1,
      'hr_description': 'description',
-     'hr_price': 12200,
      'hr_title_img': r'\rooms\1_2.jpg',
      'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Village',
-     'hr_places': 5,
      'hr_description': 'description',
-     'hr_price': 122200,
      'hr_title_img': r'\rooms\1_3.jpg',
      'hr_hotel': 'The Oberoi Udaivilas'},
     {'hr_category': 'Suite',
-     'hr_places': 2,
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\2_1.jpg',
      'hr_hotel': 'Baros Maldives'},
     {'hr_category': 'Village',
-     'hr_places': 3,
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\2_2.jpg',
      'hr_hotel': 'Baros Maldives'},
     {
      'hr_category': 'Family Room',
-     'hr_places': 2,
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\3_1.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {'hr_places': 2,
+    {
      'hr_category': 'Suite',
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\3_2.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {'hr_places': 2,
+    {
      'hr_category': 'Suite',
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\3_3.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {'hr_places': 2,
+    {
      'hr_category': 'Family Room',
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\3_4.jpg',
      'hr_hotel': 'Armani Hotel Dubai'},
-    {'hr_places': 1,
+    {
      'hr_category': 'Suite',
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\4_1.jpg',
      'hr_hotel': 'Dukes London'},
-    {'hr_places': 5,
+    {
      'hr_category': 'Village',
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\4_2.jpg',
      'hr_hotel': 'Dukes London'},
-    {'hr_places': 3,
+    {
      'hr_category': 'Village',
      'hr_description': 'description',
-     'hr_price': 12000,
      'hr_title_img': r'\rooms\4_3.jpg',
      'hr_hotel': 'Dukes London'},
 ]
+
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -146,8 +133,8 @@ class Command(BaseCommand):
 
         HotelCard.objects.all().delete()
         for hotel_card in HC:
-            new_category = HotelCard(**hotel_card)
-            new_category.save()
+            new_hc = HotelCard(**hotel_card)
+            new_hc.save()
 
         HotelRoom.objects.all().delete()
         for hr in HR:
@@ -157,8 +144,18 @@ class Command(BaseCommand):
             hr_hotel = HotelCard.objects.get(hc_name=hr_hotel)
             hr['hr_hotel'] = hr_hotel
             hr['hr_category'] = hr_category
-            new_category = HotelRoom(**hr)
-            new_category.save()
+            hr['hr_places'] = randint(1, 5)
+            hr['hr_price'] = randint(10000, 100000)
+            new_hr = HotelRoom(**hr)
+            new_hr.save()
+
+        ReservedDates.objects.all().delete()
+        for i in range(20):
+            start_date = datetime.date(randint(2019, 2019), randint(1, 2), randint(1, 28))
+            last_date = start_date + datetime.timedelta(randint(1, 30))
+            _id = randint(1, 12)
+            new_rd = ReservedDates(check_in=start_date, check_out=last_date, room=HotelRoom.objects.get(id=_id))
+            new_rd.save()
 
         # Создаем суперпользователя при помощи менеджера модели
         super_user = User.objects.create_superuser('admin', 'admin@mail.com', '123')

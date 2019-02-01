@@ -1,12 +1,8 @@
 from django.contrib import admin
-from .models import HotelCard, Category, HotelRoom, HotelDateRange
-
-
-class AuthorAdmin(admin.ModelAdmin):
-    list_display = ["room", "__str__"]
+from .models import HotelCard, Category, HotelRoom, ReservedDates
 
 
 admin.site.register(Category)
 admin.site.register(HotelCard)
 admin.site.register(HotelRoom)
-admin.site.register(HotelDateRange, AuthorAdmin)
+admin.site.register(ReservedDates)
