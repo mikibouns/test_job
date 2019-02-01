@@ -41,8 +41,8 @@ class HotelRoom(models.Model):
 
 
 class ReservedDates(models.Model):
-    user = models.ForeignKey(User)
-    room = models.ForeignKey(HotelRoom)
+    # person = models.ForeignKey(User, on_delete=models.CASCADE)
+    room = models.ForeignKey(HotelRoom, on_delete=models.CASCADE)
     check_in = models.DateField(verbose_name='check-in')
     check_out = models.DateField(verbose_name='check-out')
 

@@ -7,7 +7,6 @@ from random import randint
 import datetime
 
 
-
 try:
     os.remove('db.sqlite3')
     os.remove(r'D:\IGOR\PYTHON\test_job\test_project\catalog_app\migrations\0001_initial.py')
@@ -122,17 +121,21 @@ HR = [
 ]
 
 
+def users_iterator():
+    for i in range(6):
+        user = User(
+            first_name='User{}'.format(i),
+            email = 'user{}@mail.com'.format(i),
+            username='User{}'.format(i),
+        )
+        user.set_password('123')
+        yield user
+
+
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
-        User.objects.all().delete()
-        for user in range(1,5):
-            new_user = User.objects.create_user(
-                username='user{}'.format(user),
-                email='user{}@mail.com',
-                password=123,
-            )
-            new_user.save()
+        User.objects.bulk_create(iter(users_iterator()))
 
         Category.objects.all().delete()
         for category in CATEGORY:
@@ -162,13 +165,14 @@ class Command(BaseCommand):
             start_date = datetime.date(randint(2019, 2019), randint(1, 2), randint(1, 28))
             last_date = start_date + datetime.timedelta(randint(1, 30))
             _id = randint(1, 12)
-            new_rd = ReservedDates(check_in=start_date, check_out=last_date, room=HotelRoom.objects.get(id=_id))
+            new_rd = ReservedDates(
+                check_in=start_date,
+                check_out=last_date,
+                room=HotelRoom.objects.get(id=_id),
+                # person_id=1
+            )
+
             new_rd.save()
 
         # Создаем суперпользователя при помощи менеджера модели
         super_user = User.objects.create_superuser('admin', 'admin@mail.com', '123')
-
-        users = User.objects.all()
-        for user in users:
-            user.addedBy = super_user
-            user.save()
