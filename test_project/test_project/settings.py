@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'salesrate_app',
     'bootstrap3',
     'pagination_bootstrap',
-    'django_filters',
     'widget_tweaks',
 ]
 

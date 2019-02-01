@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load widget_tweaks %}
 {% block title %}hotel_card{% endblock %}
 {% block container %}
 {% if hotel %}
@@ -34,45 +33,25 @@
 </div>
 {% endif %}
 
-
 <div class="row">
-<form data-toggle="validator" role="form">
-  <div class="form-group col-md-4">
-    <label>Количество мест в номере:</label>
-    {% render_field filter.form.hr_places type="number" min="1" max="5" class="form-control" %}
-  </div>
-  <div class="form-group col-md-4">
-    <button type="submit" class="btn btn-success">Найти</button>
-  </div>
-</form>
+  <form data-toggle="validator" role="form" method="get">
+    <div class="form-group col-md-4">
+      <label>Дата заезда:</label>
+      <input type="date" class="form-control" name="check-in" required>
+    </div>
+    <div class="form-group col-md-4">
+      <label>Дата отъезда:</label>
+      <input type="date" class="form-control" name="check-out" required>
+    </div>
+    <div class="form-group col-md-4">
+      <label>Количество мест в номере:</label>
+      <input type="number" class="form-control" name="places" min="1" max="5" required>
+    </div>
+    <div class="form-group col-md-4">
+      <button type="submit" class="btn btn-success">Найти</button>
+    </div>
+  </form>
 </div>
-
-
-<!--<div class="row">-->
-  <!--<form data-toggle="validator" role="form" action="{% url 'catalog:hotel_page' hotel.pk %}" method="post">-->
-    <!--{% csrf_token %}-->
-    <!--<div class="form-group col-md-4">-->
-      <!--<label for="inputDate">Дата заезда:</label>-->
-      <!--<input type="date" class="form-control" name="check-in" required>-->
-    <!--</div>-->
-    <!--<div class="form-group col-md-4">-->
-      <!--<label for="inputDate">Дата отъезда:</label>-->
-      <!--<input type="date" class="form-control" name="check-out" required>-->
-    <!--</div>-->
-    <!--<div class="form-group col-md-4">-->
-      <!--<label for="sel1">Количество мест в номере:</label>-->
-      <!--<select class="form-control" name="places">-->
-        <!--<option>1</option>-->
-        <!--<option>2</option>-->
-        <!--<option>3</option>-->
-        <!--<option>4</option>-->
-      <!--</select>-->
-    <!--</div>-->
-    <!--<div class="form-group col-md-4">-->
-      <!--<button type="submit" class="btn btn-success">Найти</button>-->
-    <!--</div>-->
-  <!--</form>-->
-<!--</div>-->
 
 <div class="table">
   <!-- Default panel contents -->
@@ -88,16 +67,11 @@
       </tr>
     </thead>
     <tbody>
-    {% for room in filter.qs %}
+    {% for room in rooms %}
       <tr>
         <td>{{ room.hr_category }}</td>
         <td>{{ room.hr_price }} <span class="glyphicon glyphicon-euro"></span></td>
         <td>{{ room.hr_places}}</td>
-        <td>
-          {% for date_range in room.get_date_range %}
-          {{ date_range }}
-          {% endfor %}
-        </td>
       </tr>
     {% endfor %}
     </tbody>
