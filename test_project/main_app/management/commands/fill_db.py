@@ -166,10 +166,10 @@ class Command(BaseCommand):
             last_date = start_date + datetime.timedelta(randint(1, 30))
             _id = randint(1, 12)
             new_rd = ReservedDates(
+                # person=User.objects.get(username='User0'),
                 check_in=start_date,
                 check_out=last_date,
                 room=HotelRoom.objects.get(id=_id),
-                # person_id=1
             )
 
             new_rd.save()
